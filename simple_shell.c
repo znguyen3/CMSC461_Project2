@@ -6,7 +6,7 @@ Email: znguyen3@umbc.edu
 
 */
 
-//#include "utils.c"
+#include "utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,18 +18,38 @@ Email: znguyen3@umbc.edu
 
 int main(int argc,char* argv[]) {
 
-        /*
-        int i = 10;
+/* WORKS UNESCAPE
+        char* x;
+        char* args = ("\'Hello World\'\a");
 
+        x = unescape(args, stderr);
+        printf("Entered string: %s\n", unescape(args, stderr));
+*/
+
+
+/*
+        int x = 5;
+        char* args = ("hello");
+        printf("HERE: %s", args[0]);
+*/
+/*
         //test unescape
-        for (int j = 0; j < i; j++) {
-                char *str = unescape(argv[j], stderr);
-                strcpy(argv[j], str);
+        for (int j = 0; j < x; j++) {
+                char *str = unescape(args[j], stderr);
+
+                strcpy(args[j], str);
+
                 free(str);
         }
-        */
+*/
 
+/*
+        char *hello = "Hello\nWorld";
+        printf("Entered string: %s\n", unescape(hello,stderr));
+        free(hello);
+*/
 
+/* OTHER ULTC.c FUNCTIONS
         //testing other function in ulits.c
         char *str = ("Hellot  there jon\n");
         int size = first_unquoted_space(str);
@@ -38,8 +58,11 @@ int main(int argc,char* argv[]) {
         size_t help;
         help = count_spaces(str);
         printf("size_t = %ld\n", help);
+*/
+
 
         //if loop
+/* WORKS PID_T FORK()
 
         //testing wait() in fork() and pid_t
         pid_t pid = fork();
@@ -52,7 +75,8 @@ int main(int argc,char* argv[]) {
         else if(wait(pid > 0))
                 printf("Parent: %d\n", pid);
 
-        // ask to exit
+*/
+        // ask to exit if enter another argument in the beginning
 
         printf("\nA sample C program\n\n");
 
@@ -61,7 +85,6 @@ int main(int argc,char* argv[]) {
                 exit(1);
         }
 
-        /* KEEP
 
         //NEW STUFF HERE
         char *s = malloc(1);
@@ -77,12 +100,49 @@ int main(int argc,char* argv[]) {
                 s[i++] = c;
                 s = realloc(s, i+1); // Add space for another character to be read.
         }
+
         s[i] = '\0';  // Null terminate the string
+
+        
+        char *args[41]; // Max # of arguments
+
+        // get the first agruement
+        args[0] = strtok(s, " ");
+
+        int x = 0;
+
+        while (args[x] != NULL) {
+                args[++x] = strtok(NULL, " ");
+        }
+
+        printf(" %s\n", args[0]);
+        printf(" %s\n", args[1]);
+
+        // test for checking first agruement
+        if (!strcmp(args[0], "ls"))
+                printf("Huzzah\n");
+
+        execvp(args[0], args);
+
+        /* VIDEO EXAMPLE
+        // loop through other token
+        while (token != NULL) {
+                printf(" %s\n", token);
+
+                token = strtok(NULL, " ");
+        }
+        */
+
+        // trying to get echo and ls commands
+        //s[0] = strtok()
+
         printf("Entered string: %s\n", s);
+
         free(s);
 
 
-        */
+
 
 
 return 0;
+}
