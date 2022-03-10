@@ -104,6 +104,12 @@ int main(int argc,char* argv[]) {
         s[i] = '\0';  // Null terminate the string
 
         
+        // WORKS, finds the if the string is empty
+        if(strlen(s) == 0)
+                printf("string is empty");
+                free(s);
+                return 0;
+
         char *args[41]; // Max # of arguments
 
         // get the first agruement
