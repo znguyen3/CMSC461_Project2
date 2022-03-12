@@ -54,7 +54,7 @@ int main(int argc,char* argv[]) {
         char *str = ("Hellot  there jon\n");
         int size = first_unquoted_space(str);
         printf("size = %d\n", size);
-
+        
         size_t help;
         help = count_spaces(str);
         printf("size_t = %ld\n", help);
@@ -62,7 +62,6 @@ int main(int argc,char* argv[]) {
 
 
         //if loop
-/* WORKS PID_T FORK()
 
         //testing wait() in fork() and pid_t
         pid_t pid = fork();
@@ -72,10 +71,11 @@ int main(int argc,char* argv[]) {
                 printf("Child: %d\n", pid);
                 exit(0);
                 }
-        else if(wait(pid > 0))
+        else if(wait(pid > 0)) {
                 printf("Parent: %d\n", pid);
 
-*/
+                }
+
         // ask to exit if enter another argument in the beginning
 
         printf("\nA sample C program\n\n");
