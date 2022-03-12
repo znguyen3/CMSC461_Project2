@@ -93,8 +93,10 @@ int main(int argc,char* argv[]) {
 
         bool exit_flag = false;
         int num = 0;
+        int index = 1;
 
         while (exit_flag == false) {
+                index = 0;
 
 
                 //NEW STUFF HERE
@@ -104,7 +106,7 @@ int main(int argc,char* argv[]) {
 
                 printf("Enter your command: ");
 
-
+                
                 //NEED TO REWRITE BETTER FORMAT THAN THIS
                 // Read characters until found an EOF or newline character.
                 while((c = getchar()) != '\n' && c != EOF)
@@ -127,8 +129,10 @@ int main(int argc,char* argv[]) {
 
                         int x = 0;
 
+                        // checks and counts for each string in the user input
                         while (args[x] != NULL) {
                                 args[++x] = strtok(NULL, " ");
+                                index++;                                                 
                         }
 
                         printf(" %s\n", args[0]);
@@ -141,7 +145,6 @@ int main(int argc,char* argv[]) {
                                         num = 0;
                                         exit_flag = true;
                                 }
-                                
 
                                 //check if 2nd input is a number
                                 else {
@@ -165,11 +168,27 @@ int main(int argc,char* argv[]) {
                                         else {
                                                 printf("That is not a exit\n");
                                         }
-
-
                                         //printf("HERE:  %d\n", num);
                                 }
                         }
+
+                        else {
+                                
+                                int status;
+                                //testing wait() in fork() and pid_t
+                                pid_t pid = fork();
+                                if (pid == -1)
+                                        exit(-1);
+                                else if(pid == 0) {
+                                        printf("Child: %d\n", pid);
+                                        execvp(args[0], args);
+                                }
+                                // (wait(pid > 0))
+                                else {
+                                        printf("Parent: %d\n", pid);
+                                        while (wait(&status) != pid);
+                        }
+                }
 
 
 
@@ -177,14 +196,11 @@ int main(int argc,char* argv[]) {
                         if (!strcmp(args[0], "ls"))
                                 printf("Huzzah\n");
 
-                        execvp(args[0], args);
 
                         free(s);
                         //free(args);
 
                 }
-
-
 
 
         /* VIDEO EXAMPLE
@@ -214,8 +230,8 @@ int main(int argc,char* argv[]) {
 
                 //exit_flag = true;
         }
+
         exit(num);
 
         return 0;
 }
-
