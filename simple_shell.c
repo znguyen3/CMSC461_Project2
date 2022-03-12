@@ -11,6 +11,9 @@ Email: znguyen3@umbc.edu
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <ctype.h>
+
+#include <stdbool.h>
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -86,55 +89,103 @@ int main(int argc,char* argv[]) {
                 }
 */
 
+        // false flag until user input exit, then check if its exit 0, if not then false
+
+        bool exit_flag = false;
+        int num = 0;
+
+        while (exit_flag == false) {
+
+
+                //NEW STUFF HERE
+                char *s = malloc(1);
+                int c;
+                int i = 0;
+
+                printf("Enter your command: ");
+
+
+                //NEED TO REWRITE BETTER FORMAT THAN THIS
+                // Read characters until found an EOF or newline character.
+                while((c = getchar()) != '\n' && c != EOF)
+                {
+                        s[i++] = c;
+                        s = realloc(s, i+1); // Add space for another character to be read.
+                }
+
+                s[i] = '\0';  // Null terminate the string
 
 
 
-        //NEW STUFF HERE
-        char *s = malloc(1);
-        int c;
-        int i = 0;
+                // checks if string is empty, loop until user inputs
+                if(s[0] != '\0') {
 
-        printf("Enter your command: ");
+                        char *args[41]; // Max # of arguments
+
+                        // get the first agruement
+                        args[0] = strtok(s, " ");
+
+                        int x = 0;
+
+                        while (args[x] != NULL) {
+                                args[++x] = strtok(NULL, " ");
+                        }
+
+                        printf(" %s\n", args[0]);
+                        printf(" %s\n", args[1]);
+
+                        if (!strcmp(args[0], "exit")) {
+
+                                // check if 2nd input is empty, exit 0
+                                if(args[1] == '\0') {
+                                        num = 0;
+                                        exit_flag = true;
+                                }
+                                
+
+                                //check if 2nd input is a number
+                                else {
+                                        num = 0;
+
+                                        num = strtol(args[1], NULL, 10);
+
+                                        // set is_exit to true if 2nd input is a number
+                                        if (num != 0) {
+                                                exit_flag = true;
+                                                //free(s);
+                                                //free(args);
+                                        }
+
+                                        // set is_exit to true if 2nd input is a number
+                                        else if (!strcmp(args[1], "0")) {
+                                                num = 0;
+                                                exit_flag = true;
+                                        }
+
+                                        else {
+                                                printf("That is not a exit\n");
+                                        }
 
 
-        //NEED TO REWRITE BETTER FORMAT THAN THIS
-        // Read characters until found an EOF or newline character.
-        while((c = getchar()) != '\n' && c != EOF)
-        {
-                s[i++] = c;
-                s = realloc(s, i+1); // Add space for another character to be read.
-        }
+                                        //printf("HERE:  %d\n", num);
+                                }
+                        }
 
-        s[i] = '\0';  // Null terminate the string
-        
 
-        // WORKS?, finds the if the string is empty
-        if(s[0] == '\0') {
-                printf("string is empty\n");
-                //free(s);
-        }
 
-/*
+                        // test for checking first agruement
+                        if (!strcmp(args[0], "ls"))
+                                printf("Huzzah\n");
 
-        char *args[41]; // Max # of arguments
+                        execvp(args[0], args);
 
-        // get the first agruement
-        args[0] = strtok(s, " ");
+                        free(s);
+                        //free(args);
 
-        int x = 0;
+                }
 
-        while (args[x] != NULL) {
-                args[++x] = strtok(NULL, " ");
-        }
 
-        printf(" %s\n", args[0]);
-        printf(" %s\n", args[1]);
 
-        // test for checking first agruement
-        if (!strcmp(args[0], "ls"))
-                printf("Huzzah\n");
-
-        execvp(args[0], args);
 
         /* VIDEO EXAMPLE
         // loop through other token
@@ -148,15 +199,23 @@ int main(int argc,char* argv[]) {
         // trying to get echo and ls commands
         //s[0] = strtok()
 
+                //string is empty
+                else {
+                        printf("string is empty\n");
 
 
-        printf("Entered string: %s\n", s);
+                        printf("Entered string: %s\n", s);
 
-        free(s);
+                        // free empty string
+                        free(s);
+                }
 
+                printf("TESTING\n");
 
-
-
+                //exit_flag = true;
+        }
+        exit(num);
 
         return 0;
 }
+
