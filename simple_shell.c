@@ -63,7 +63,27 @@ int main(int argc,char* argv[]) {
         printf("size_t = %ld\n", help);
 */
 
+/*
+//TESTING echo
+        char* command = "echo";
+        char* argument_list[] = {"echo", "hello", NULL};
 
+        int status_s;
+        //testing wait() in fork() and pid_t
+        pid_t pid_s = fork();
+        if (pid_s == -1)
+                exit(-1);
+        else if(pid_s == 0) {
+                printf("Child: %d\n", pid_s);
+                execvp(command, argument_list);
+        }
+        // (wait(pid > 0))
+        else {
+                printf("Parent: %d\n", pid_s);
+                while (wait(&status_s) != pid_s);
+        }
+*/
+                        
         printf("\nA sample C program\n\n");
 
         // ask to exit if enter another argument in the beginning
@@ -106,7 +126,7 @@ int main(int argc,char* argv[]) {
 
                 printf("Enter your command: ");
 
-                
+
                 //NEED TO REWRITE BETTER FORMAT THAN THIS
                 // Read characters until found an EOF or newline character.
                 while((c = getchar()) != '\n' && c != EOF)
@@ -124,6 +144,9 @@ int main(int argc,char* argv[]) {
 
                         char *args[41]; // Max # of arguments
 
+                        char *words[41];
+                
+
                         // get the first agruement
                         args[0] = strtok(s, " ");
 
@@ -135,8 +158,18 @@ int main(int argc,char* argv[]) {
                                 index++;                                                 
                         }
 
-                        printf(" %s\n", args[0]);
-                        printf(" %s\n", args[1]);
+                        
+                        //unescape time WORKS NOW
+                        //x = unescape(args[0], stderr);
+                        words[0] = unescape(args[0], stderr);
+
+                        printf("Entered string UNESCAPE: %s\n", words[0]);
+                        free(s);
+                        free(*words);
+                        return 0;
+                        
+                        //printf(" %s\n", args[0]);
+                        //printf(" %s\n", args[1]);
 
                         if (!strcmp(args[0], "exit")) {
 
@@ -173,7 +206,6 @@ int main(int argc,char* argv[]) {
                         }
 
                         else {
-                                
                                 int status;
                                 //testing wait() in fork() and pid_t
                                 pid_t pid = fork();
