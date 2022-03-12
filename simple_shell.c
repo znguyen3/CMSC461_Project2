@@ -54,13 +54,22 @@ int main(int argc,char* argv[]) {
         char *str = ("Hellot  there jon\n");
         int size = first_unquoted_space(str);
         printf("size = %d\n", size);
-        
+
         size_t help;
         help = count_spaces(str);
         printf("size_t = %ld\n", help);
 */
 
 
+        printf("\nA sample C program\n\n");
+
+        // ask to exit if enter another argument in the beginning
+        if (argc > 1) {
+                fprintf(stderr, "Shell does not accept any command line arguments \n");
+                exit(1);
+        }
+
+/*WORKS PID_T FORCK()
         //if loop
 
         //testing wait() in fork() and pid_t
@@ -75,15 +84,9 @@ int main(int argc,char* argv[]) {
                 printf("Parent: %d\n", pid);
 
                 }
+*/
 
-        // ask to exit if enter another argument in the beginning
 
-        printf("\nA sample C program\n\n");
-
-        if (argc > 1) {
-                fprintf(stderr, "Shell does not accept any command line arguments \n");
-                exit(1);
-        }
 
 
         //NEW STUFF HERE
@@ -92,6 +95,7 @@ int main(int argc,char* argv[]) {
         int i = 0;
 
         printf("Enter your command: ");
+
 
         //NEED TO REWRITE BETTER FORMAT THAN THIS
         // Read characters until found an EOF or newline character.
@@ -102,13 +106,15 @@ int main(int argc,char* argv[]) {
         }
 
         s[i] = '\0';  // Null terminate the string
-
         
-        // WORKS, finds the if the string is empty
-        if(strlen(s) == 0)
-                printf("string is empty");
-                free(s);
-                return 0;
+
+        // WORKS?, finds the if the string is empty
+        if(s[0] == '\0') {
+                printf("string is empty\n");
+                //free(s);
+        }
+
+/*
 
         char *args[41]; // Max # of arguments
 
@@ -142,6 +148,8 @@ int main(int argc,char* argv[]) {
         // trying to get echo and ls commands
         //s[0] = strtok()
 
+
+
         printf("Entered string: %s\n", s);
 
         free(s);
@@ -150,5 +158,5 @@ int main(int argc,char* argv[]) {
 
 
 
-return 0;
+        return 0;
 }
