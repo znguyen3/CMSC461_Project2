@@ -21,52 +21,6 @@ Email: znguyen3@umbc.edu
 
 int main(int argc,char* argv[]) {
 
-/*
-        char* command = "proc";
-        char* argument_list[] = {"proc", "", NULL};
-
-        execvp(command, argument_list);
-*/
-
-        printf("\nA sample C program\n\n");
-
-/*WORKS
-        FILE *fp;
-        int c;
-        fp = fopen("/proc/cpuinfo","r");
-        if(fp == NULL) {
-                perror("Error in opening file");
-                return(-1);
-        } do {
-                c = fgetc(fp);
-                if( feof(fp) ) {
-                break ;
-        }
-                printf("%c", c);
-        } while(1);
-
-        fclose(fp);
-*/
-        /*WORKS
-        char value;
-        FILE *fp = fopen("/proc/cpuinfo", "r");
-
-        // Open file
-        if (fp == NULL) {
-                fprintf(stderr, "Error opening file\n");
-        }
-
-        else {
-                while ((value = fgetc(fp)) != EOF) {
-                        printf("%c", value);
-                }
-
-                fclose(fp);
-        }
-        */
-
-        printf("\nA sample C program\n\n");
-
         // ask to exit if enter another argument in the beginning
         if (argc > 1) {
                 fprintf(stderr, "Shell does not accept any command line arguments \n");
@@ -82,8 +36,6 @@ int main(int argc,char* argv[]) {
         while (exit_flag == false) {
                 index = 0;
 
-
-                //NEW STUFF HERE
                 char *s = malloc(1);
                 int c;
                 int i = 0;
@@ -317,21 +269,20 @@ int main(int argc,char* argv[]) {
                                 }
                                 //child fork()
                                 else if(child_pid == 0) {
-                                        printf("Child: %d\n", child_pid);
-
                                         char *words[41];
 
                                         for (int x = 0; x <= index-1; x++) {
                                                 words[x] = unescape(args[x], stderr);
                                         }
 
+                                        //add NULL after the last char
                                         words[index] = NULL;
+
                                         execvp(words[0], words);
                                 }
 
                                 // parent fork()
                                 else {
-                                        printf("Parent: %d\n", child_pid);
                                         while (wait(&child_status) != child_pid);
                                 }
                         }
