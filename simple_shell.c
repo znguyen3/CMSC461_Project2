@@ -21,6 +21,50 @@ Email: znguyen3@umbc.edu
 
 int main(int argc,char* argv[]) {
 
+/*
+        char* command = "proc";
+        char* argument_list[] = {"proc", "", NULL};
+
+        execvp(command, argument_list);
+*/
+
+        printf("\nA sample C program\n\n");
+
+/*WORKS
+        FILE *fp;
+        int c;
+        fp = fopen("/proc/cpuinfo","r");
+        if(fp == NULL) {
+                perror("Error in opening file");
+                return(-1);
+        } do {
+                c = fgetc(fp);
+                if( feof(fp) ) {
+                break ;
+        }
+                printf("%c", c);
+        } while(1);
+
+        fclose(fp);
+*/
+        /*WORKS
+        char value;
+        FILE *fp = fopen("/proc/cpuinfo", "r");
+
+        // Open file
+        if (fp == NULL) {
+                fprintf(stderr, "Error opening file\n");
+        }
+
+        else {
+                while ((value = fgetc(fp)) != EOF) {
+                        printf("%c", value);
+                }
+
+                fclose(fp);
+        }
+        */
+
         printf("\nA sample C program\n\n");
 
         // ask to exit if enter another argument in the beginning
@@ -44,6 +88,10 @@ int main(int argc,char* argv[]) {
                 int c;
                 int i = 0;
 
+                char value;
+                FILE *fp;
+
+
                 printf("Enter your command: ");
 
 
@@ -54,7 +102,7 @@ int main(int argc,char* argv[]) {
                         s[i++] = c;
                         s = realloc(s, i+1); // Add space for another character to be read.
                 }
-                
+
                 s[i] = '\0';  // Null terminate the string
 
                 // checks if string is empty, loop until user inputs
@@ -72,8 +120,6 @@ int main(int argc,char* argv[]) {
                                 args[++x] = strtok(NULL, " ");
                                 index++;
                         }
-
-                        printf("PRINT SPACES INDEXS: %d\n", index);
 
                         // exit statment
                         if (!strcmp(args[0], "exit")) {
@@ -106,8 +152,160 @@ int main(int argc,char* argv[]) {
                                         }
                                 }
                         }
-                        
-                        // echo statment
+
+                        // proc statement
+                        else if ((!strcmp(args[0], "proc"))) {
+
+                                // 2nd user input is cpuinfo
+                                if ((!strcmp(args[1], "cpuinfo"))) {
+                                        fp = fopen("/proc/cpuinfo", "r");
+
+                                        // check if file has nothing in it
+                                        if (fp == NULL) {
+                                                fprintf(stderr, "Error opening file\n");
+                                        }
+
+                                        // Opens the file
+                                        else {
+                                                // prints every line from file until end of line
+                                                while ((value = fgetc(fp)) != EOF) {
+                                                        printf("%c", value);
+                                                }
+
+                                                //close the file
+                                                fclose(fp);
+                                        }
+                                }
+
+                                // 2nd user input is loadavg
+                                else if ((!strcmp(args[1], "loadavg"))) {
+                                        fp = fopen("/proc/loadavg", "r");
+
+                                        // check if file has nothing in it
+                                        if (fp == NULL) {
+                                                fprintf(stderr, "Error opening file\n");
+                                        }
+
+                                        // Opens the file
+                                        else {
+                                                // prints every line from file until end of line
+                                                while ((value = fgetc(fp)) != EOF) {
+                                                        printf("%c", value);
+                                                }
+
+                                                //close the file
+                                                fclose(fp);
+                                        }
+                                }
+
+                                // 2nd user input is filesystems
+                                else if ((!strcmp(args[1], "filesystems"))) {
+                                        fp = fopen("/proc/filesystems", "r");
+
+                                        // check if file has nothing in it
+                                        if (fp == NULL) {
+                                                fprintf(stderr, "Error opening file\n");
+                                        }
+
+                                        // Opens the file
+                                        else {
+                                                // prints every line from file until end of line
+                                                while ((value = fgetc(fp)) != EOF) {
+                                                        printf("%c", value);
+                                                }
+
+                                                //close the file
+                                                fclose(fp);
+                                        }
+                                }
+
+                                // 2nd user input is mounts
+                                else if ((!strcmp(args[1], "mounts"))) {
+                                        fp = fopen("/proc/mounts", "r");
+
+                                        // check if file has nothing in it
+                                        if (fp == NULL) {
+                                                fprintf(stderr, "Error opening file\n");
+                                        }
+
+                                        // Opens the file
+                                        else {
+                                                // prints every line from file until end of line
+                                                while ((value = fgetc(fp)) != EOF) {
+                                                        printf("%c", value);
+                                                }
+
+                                                //close the file
+                                                fclose(fp);
+                                        }
+                                }
+
+                                // 2nd user input is pid/status
+                                else if ((!strcmp(args[1], "22365/status"))) {
+                                        fp = fopen("/proc/22365/status", "r");
+
+                                        // check if file has nothing in it
+                                        if (fp == NULL) {
+                                                fprintf(stderr, "Error opening file\n");
+                                        }
+
+                                        // Opens the file
+                                        else {
+                                                // prints every line from file until end of line
+                                                while ((value = fgetc(fp)) != EOF) {
+                                                        printf("%c", value);
+                                                }
+
+                                                printf("\n\n");
+                                                //close the file
+                                                fclose(fp);
+                                        }
+                                }
+
+                                // 2nd user input is pid/environ
+                                else if ((!strcmp(args[1], "22365/environ"))) {
+                                        fp = fopen("/proc/22365/environ", "r");
+
+                                        // check if file has nothing in it
+                                        if (fp == NULL) {
+                                                fprintf(stderr, "Error opening file\n");
+                                        }
+
+                                        // Opens the file
+                                        else {
+                                                // prints every line from file until end of line
+                                                while ((value = fgetc(fp)) != EOF) {
+                                                        printf("%c", value);
+                                                }
+
+                                                //close the file
+                                                fclose(fp);
+                                        }
+                                }
+
+                                // 2nd user input is pid/sched
+                                else if ((!strcmp(args[1], "22365/sched"))) {
+                                        fp = fopen("/proc/22365/sched", "r");
+
+                                        // check if file has nothing in it
+                                        if (fp == NULL) {
+                                                fprintf(stderr, "Error opening file\n");
+                                        }
+
+                                        // Opens the file
+                                        else {
+                                                // prints every line from file until end of line
+                                                while ((value = fgetc(fp)) != EOF) {
+                                                        printf("%c", value);
+                                                }
+
+                                                //close the file
+                                                fclose(fp);
+                                        }
+                                }
+                        }
+
+                        // echo statement
                         else if ((!strcmp(args[0], "echo")) || (!strcmp(args[0], "/bin/echo"))) {
 
                                 int child_status;
@@ -143,15 +341,16 @@ int main(int argc,char* argv[]) {
                                 int status;
                                 //testing wait() in fork() and pid_t
                                 pid_t pid = fork();
+
+                                // error
                                 if (pid == -1)
                                         exit(-1);
+                                // child process
                                 else if(pid == 0) {
-                                        printf("Child: %d\n", pid);
                                         execvp(args[0], args);
                                 }
-                                // (wait(pid > 0))
+                                // parent process
                                 else {
-                                        printf("Parent: %d\n", pid);
                                         while (wait(&status) != pid);
                         }
                 }
@@ -159,7 +358,7 @@ int main(int argc,char* argv[]) {
                         // free the user input
                         free(s);
                 }
-                
+
                 //string is empty
                 else {
                         // free empty string
