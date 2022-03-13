@@ -137,14 +137,14 @@ int main(int argc,char* argv[]) {
 
                 s[i] = '\0';  // Null terminate the string
 
-
-
                 // checks if string is empty, loop until user inputs
                 if(s[0] != '\0') {
 
                         char *args[41]; // Max # of arguments
 
-                        char *words[41];
+                        //char *words[41];
+
+                        //char *words_temp[41];
                 
 
                         // get the first agruement
@@ -158,19 +158,37 @@ int main(int argc,char* argv[]) {
                                 index++;                                                 
                         }
 
+                        printf("PRINT SPACES INDEXS: %d\n", index);
                         
+                        
+                        /* WORKING execvp for echo
+
+                        for (int x = 0; x <= index-1; x++) {
+                                words[x] = unescape(args[x], stderr);
+                                //free(s);
+                                //free(*words);
+                        }
+
+                        words[index] = NULL;
+
                         //unescape time WORKS NOW
                         //x = unescape(args[0], stderr);
-                        words[0] = unescape(args[0], stderr);
+                        //words[0] = unescape(args[0], stderr);
 
-                        printf("Entered string UNESCAPE: %s\n", words[0]);
+                        //printf("Entered string UNESCAPE: %s\n", words[0]);
+
+                        execvp(words[0], words);
                         free(s);
                         free(*words);
                         return 0;
+                        */
+
+
                         
                         //printf(" %s\n", args[0]);
                         //printf(" %s\n", args[1]);
 
+                        // exit statment
                         if (!strcmp(args[0], "exit")) {
 
                                 // check if 2nd input is empty, exit 0
@@ -205,6 +223,62 @@ int main(int argc,char* argv[]) {
                                 }
                         }
 
+                        // echo statment
+                        else if ((!strcmp(args[0], "echo")) || (!strcmp(args[0], "/bin/echo"))) {
+                                
+                                
+                                /*
+                                for (int x = 0; x <= index-1; x++) {
+                                        words[x] = unescape(args[x], stderr);
+                                }
+
+                                //unescape time WORKS NOW
+                                //x = unescape(args[0], stderr);
+                                //words[0] = unescape(args[0], stderr);
+
+                                //printf("Entered string UNESCAPE: %s\n", words[0]);
+                                //free(s);
+                                //free(*words);
+
+                                words[index] = NULL;
+                                */
+
+                                int child_status;
+                                pid_t child_pid = fork();
+                                //failed
+                                if (child_pid == -1) {
+                                        printf("Failed\n");
+                                        exit(-1);
+                                }
+                                //child fork()
+                                else if(child_pid == 0) {
+                                        printf("Child: %d\n", child_pid);
+
+                                        char *words[41];
+
+                                        for (int x = 0; x <= index-1; x++) {
+                                                words[x] = unescape(args[x], stderr);
+                                        }
+
+                                        words[index] = NULL;
+                                        execvp(words[0], words);
+                                }
+
+                                // parent fork()
+                                else {
+                                        printf("Parent: %d\n", child_pid);
+                                        while (wait(&child_status) != child_pid);
+                                        //free(s);
+                                        //free(*words);
+                                        
+                                }
+
+                                //free(args);
+                                printf("HELP \n\n");
+                                //free(*words);
+                        }
+
+                        // other statments
                         else {
                                 int status;
                                 //testing wait() in fork() and pid_t
@@ -228,9 +302,10 @@ int main(int argc,char* argv[]) {
                         if (!strcmp(args[0], "ls"))
                                 printf("Huzzah\n");
 
-
+                        // free s after execvp and user input
                         free(s);
                         //free(args);
+                        printf("PLEAD\n");
 
                 }
 
