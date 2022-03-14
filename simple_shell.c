@@ -3,7 +3,6 @@ Name: Zachary Nguyen
 Section: 02
 Professor: Tompkins
 Email: znguyen3@umbc.edu
-
 */
 
 #include "utils.h"
@@ -14,6 +13,7 @@ Email: znguyen3@umbc.edu
 #include <ctype.h>
 
 #include <stdbool.h>
+#include <string.h>
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -32,6 +32,7 @@ int main(int argc,char* argv[]) {
 
         int num = 0;
         int index = 1;
+        int n1 = getpid();
 
         while (exit_flag == false) {
                 index = 0;
@@ -107,6 +108,27 @@ int main(int argc,char* argv[]) {
 
                         // proc statement
                         else if ((!strcmp(args[0], "proc"))) {
+
+                                int n1 = getpid();
+                                char pid_proc[] = "/proc/";
+                                char status_proc[100];
+                                char environ_proc[100];
+                                char sched_proc[100];
+                                char source[] = "/status";
+                                char source2[] = "/environ";
+                                char source3[] = "/sched";
+
+                                // makes pid into char
+                                sprintf(status_proc, "%d", n1);
+                                sprintf(environ_proc, "%d", n1);
+                                sprintf(sched_proc, "%d", n1);
+
+                                //gets the live pid from user with pid/status
+                                strcat(status_proc, source);
+                                //gets the live pid from user with pid/enivron
+                                strcat(environ_proc, source2);
+                                //gets the live pid from user with pid/sched
+                                strcat(sched_proc, source3);
 
                                 // 2nd user input is cpuinfo
                                 if ((!strcmp(args[1], "cpuinfo"))) {
@@ -192,9 +214,14 @@ int main(int argc,char* argv[]) {
                                         }
                                 }
 
+
                                 // 2nd user input is pid/status
-                                else if ((!strcmp(args[1], "22365/status"))) {
-                                        fp = fopen("/proc/22365/status", "r");
+                                else if ((!strcmp(args[1], status_proc))) {
+
+                                        //adds the pid from user to string
+                                        strcat(pid_proc, status_proc);
+
+                                        fp = fopen(pid_proc, "r");
 
                                         // check if file has nothing in it
                                         if (fp == NULL) {
@@ -215,8 +242,12 @@ int main(int argc,char* argv[]) {
                                 }
 
                                 // 2nd user input is pid/environ
-                                else if ((!strcmp(args[1], "22365/environ"))) {
-                                        fp = fopen("/proc/22365/environ", "r");
+                                else if ((!strcmp(args[1], environ_proc))) {
+
+                                        //adds the pid from user to string
+                                        strcat(pid_proc, environ_proc);
+
+                                        fp = fopen(pid_proc, "r");
 
                                         // check if file has nothing in it
                                         if (fp == NULL) {
@@ -236,8 +267,12 @@ int main(int argc,char* argv[]) {
                                 }
 
                                 // 2nd user input is pid/sched
-                                else if ((!strcmp(args[1], "22365/sched"))) {
-                                        fp = fopen("/proc/22365/sched", "r");
+                                else if ((!strcmp(args[1], sched_proc))) {
+
+                                        //adds the pid from user to string
+                                        strcat(pid_proc, sched_proc);
+
+                                        fp = fopen(pid_proc, "r");
 
                                         // check if file has nothing in it
                                         if (fp == NULL) {
