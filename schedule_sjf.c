@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "task.h"
 #include "cpu.h"
 #include "list.h"
@@ -11,10 +10,7 @@ struct node *start;
 struct task *add_task;
 struct node *head = NULL;
 struct node *current = NULL;
-
-
 int num = 0;
-
 
 /*Delete the first node of a linked list.*/
 void delete_first_node(struct node **head) {
@@ -89,7 +85,6 @@ void add(char *name_id,int priority_id,int burst_id) {
 
         return;
 }
-
 
 void schedule() {
         printf("\nPrinting out the schedule and running the task \n\n");
