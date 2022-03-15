@@ -60,6 +60,8 @@ void add(char *name_id,int priority_id,int burst_id) {
         start = malloc(sizeof(struct task));
         add_task = malloc(sizeof(struct task));
 
+        //start->id = 1;
+
         add_task->name = name_id;
         add_task->priority = priority_id;
         add_task->burst = burst_id;
