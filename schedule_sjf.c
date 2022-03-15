@@ -97,7 +97,7 @@ void schedule() {
         // sort the list from least to highest based on task burst
         sortList();
 
-        printf("Shortest Job First (SJF), an algorithm in which the process having the smallest burst (execution time) is chosen for the next execution.\n\n">
+        printf("Shortest Job First (SJF), an algorithm in which the process having the smallest burst (execution time) is chosen for the next execution.\n\n");
 
         printf("From the schedule, the task with the smallest burst is [%s] with a burst of [%d]\n", start->task->name, start->task->burst);
 
