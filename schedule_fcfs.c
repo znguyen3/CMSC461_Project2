@@ -87,7 +87,7 @@ void schedule() {
 
         reverse(&start);
 
-        printf("FCFS (First come, first served) is the process that comes first will be executed first and next process starts only after t>
+        printf("FCFS (First come, first served) is the process that comes first will be executed first and next process starts only after the previous gets fully executed\n\n");
 
         //traverse_list(start,&start,add_task);
 
