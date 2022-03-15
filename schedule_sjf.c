@@ -9,31 +9,12 @@
 
 struct node *start;
 struct task *add_task;
-
 struct node *head = NULL;
 struct node *current = NULL;
 
+
 int num = 0;
 
-/*
-// Function to reverse the linked list
-static void reverse(struct node** head) {
-        struct node* previous = NULL;   // the previous pointer
-        struct node* current = *head;   // the main pointer
-
-        // traverse the list
-        while (current != NULL) {
-                // tricky: note the next node
-                struct node* next = current->next;
-
-                current->next = previous;    // fix the current node
-
-                // advance the two pointers
-                previous = current;
-                current = next;
-        }
-
- */
 
 /*Delete the first node of a linked list.*/
 void delete_first_node(struct node **head) {
@@ -52,58 +33,6 @@ void delete_first_node(struct node **head) {
   free(tmp);
 }
 
-/*
-// Function that returns smallest element
-// from the linked list.
-char* smallestElement(struct node* head) {
-        // Declare a min variable and initialize
-        // it with INT_MAX value.
-        // INT_MAX is integer type and its value
-        // is 32767 or greater.
-        int min = 32767;
-
-        struct node* current = head;
-
-        // Check loop while head not equal to None
-        while(current != NULL) {
-                // If min is greater then head.data then
-                // assign value of head.data to min
-                // otherwise node point to next node.
-                if (min > (current->task->burst)) {
-                        min = current->task->burst;
-                }
-
-                current = current->next;
-        }
-
-        return current->task->name;
-}*/
-
-/*
-//minNode() will find out the minimum value node in the list  
-void minNode() {
-    struct node *current = head;
-    int min;
-
-    if(head == NULL) {
-        printf("List is empty \n");  
-    }
-    else {
-        //Initializing min with head node data  
-        min = head->data;
-
-        while(current != NULL){
-             //If current node's data is smaller than min  
-             //Then, replace value of min with current node's data  
-             if(min > current->data) {
-                 min = current->data;
-             }
-             current= current->next;
-        }
-        printf("Minimum value node in the list: %d\n", min);
-    }
-}
-*/
 
 //sortList() will sort nodes of the list in ascending order
 void sortList() {
@@ -160,6 +89,7 @@ void add(char *name_id,int priority_id,int burst_id) {
 
         return;
 }
+
 
 void schedule() {
         printf("\nPrinting out the schedule and running the task \n\n");
