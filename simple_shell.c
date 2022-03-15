@@ -6,15 +6,12 @@ Email: znguyen3@umbc.edu
 */
 
 #include "utils.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <ctype.h>
-
 #include <stdbool.h>
 #include <string.h>
-
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
@@ -29,48 +26,47 @@ int main(int argc,char* argv[]) {
 
         // false flag until user input exit, then check if its exit 0, if not then false
         bool exit_flag = false;
-
         int num = 0;
         int index = 1;
-        int n1 = getpid();
 
         while (exit_flag == false) {
                 index = 0;
 
-                char *s = malloc(1);
-                int c;
+                // counts how many chars in the strings input
                 int i = 0;
-
                 char value;
                 FILE *fp;
-
+                char *strings = malloc(1);
+                int chars;
 
                 printf("Enter your command: ");
 
-
-                //NEED TO REWRITE BETTER FORMAT THAN THIS
-                // Read characters until found an EOF or newline character.
-                while((c = getchar()) != '\n' && c != EOF)
-                {
-                        s[i++] = c;
-                        s = realloc(s, i+1); // Add space for another character to be read.
+                // accepts command input of arbitrary length by looping and reading until the loop is at newline character or EOF
+                while((chars = getchar()) != '\n' && chars != EOF) {
+                        // read and inserts the char into the s
+                        strings[i++] = chars;
+                        // Using realloc, adds another char space for another character to be inserted
+                        strings = realloc(strings, i+1);
                 }
 
-                s[i] = '\0';  // Null terminate the string
+                // Null at the last char to terminate the string
+                strings[i] = '\0';
 
                 // checks if string is empty, loop until user inputs
-                if(s[0] != '\0') {
+                if(strings[0] != '\0') {
 
-                        char *args[41]; // Max # of arguments
+                        // total max number of arguments
+                        char *args[41];
 
-                        // get the first agruement
-                        args[0] = strtok(s, " ");
+                        // get the first argument
+                        args[0] = strtok(strings, " ");
 
-                        int x = 0;
+                        //counter to check for each string in input
+                        int counter = 0;
 
                         // checks and counts for each string in the user input
-                        while (args[x] != NULL) {
-                                args[++x] = strtok(NULL, " ");
+                        while (args[counter] != NULL) {
+                                args[++counter] = strtok(NULL, " ");
                                 index++;
                         }
 
@@ -109,6 +105,7 @@ int main(int argc,char* argv[]) {
                         // proc statement
                         else if ((!strcmp(args[0], "proc"))) {
 
+                                // checks for pid or proc statement
                                 int n1 = getpid();
                                 char pid_proc[] = "/proc/";
                                 char status_proc[100];
@@ -342,13 +339,13 @@ int main(int argc,char* argv[]) {
                 }
 
                         // free the user input
-                        free(s);
+                        free(strings);
                 }
 
                 //string is empty
                 else {
                         // free empty string
-                        free(s);
+                        free(strings);
                 }
         }
 
