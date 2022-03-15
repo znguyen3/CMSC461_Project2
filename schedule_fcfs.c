@@ -89,8 +89,6 @@ void schedule() {
 
         printf("FCFS (First come, first served) is the process that comes first will be executed first and next process starts only after the previous gets fully executed\n\n");
 
-        //traverse_list(start,&start,add_task);
-
         for (int i = 0; i <= num - 1; i++) {
                 printf("Running the task\n");
                 run(start->task,start->task->burst);
