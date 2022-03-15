@@ -7,6 +7,12 @@
 #include "list.h"
 #include "schedulers.h"
 
+struct node *start;
+struct task *add_task;
+struct node *head = NULL;
+struct node *current = NULL;
+
+
 int num = 0;
 
 // Function to reverse the linked list
@@ -49,18 +55,10 @@ void delete_first_node(struct node **head) {
 }
 
 
-struct node *start;
-struct task *add_task;
-
-struct node *head = NULL;
-struct node *current = NULL;
-
 void add(char *name_id,int priority_id,int burst_id) {
 
         start = malloc(sizeof(struct task));
         add_task = malloc(sizeof(struct task));
-
-        //start->id = 1;
 
         add_task->name = name_id;
         add_task->priority = priority_id;
